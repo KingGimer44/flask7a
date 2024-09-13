@@ -2,6 +2,7 @@ from flask import Flask
 
 from flask import render_template
 from flask import request
+import pusher
 
 app = Flask(__name__)
 
@@ -18,3 +19,14 @@ def alumnosGuardar():
     matricula = request.form["txtMatriculaFA"];
     nombreapellido = request.form["txtNombreApellidoFA"];
     return f"Matrícula: {matricula} Nombre y Apellido: {nombreapellido}"
+@app.route("/evento")
+def evento()
+    pusher_client = pusher.Pusher(
+      app_id='1767967',
+      key='34091ea15b1a362fb38d',
+      secret='9a986831a832e499c9e4',
+      cluster='us2',
+      ssl=True
+    )
+
+    pusher_client.trigger('conexion', 'evento', {'message': 'hello world'})
