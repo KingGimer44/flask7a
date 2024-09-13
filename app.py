@@ -20,7 +20,7 @@ def alumnosGuardar():
     nombreapellido = request.form["txtNombreApellidoFA"];
     return f"Matrícula: {matricula} Nombre y Apellido: {nombreapellido}"
     
-@app.route("/evento")
+@app.route("/evento", methods=["GET"])
 def evento():
     pusher_client = pusher.Pusher(
         app_id='1767967',
@@ -30,4 +30,4 @@ def evento():
         ssl=True
     )
     
-    pusher_client.trigger('conexion', 'evento', {"txtTemperatura": 50, "txtHumedad": 3, "dpFechaHora": "2024-09-12 20:13:00"})
+    pusher_client.trigger('conexion', 'evento', request.args)
