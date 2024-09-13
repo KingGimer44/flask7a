@@ -19,7 +19,7 @@
         //canal > conexion
         var channel = pusher.subscribe('conexion');
           //Evento, accion
-        channel.bind('evento', function(data) {
+        channel.bind('evento', function(mensaje) {
           alert("Ya ocurrio el evento en la pagina")
             //alert(JSON.stringify(data));
         });
