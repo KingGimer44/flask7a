@@ -20,9 +20,13 @@
         var channel = pusher.subscribe('conexion');
           //Evento, accion
         channel.bind('evento', function(mensaje) {
-          alert("Ya ocurrio el evento en la pagina")
-            //alert(JSON.stringify(data));
-        });
+          //alert("Ya ocurrio el evento en la pagina")
+            $("#tbodyLog").append(`<tr>
+                <td>${mensaje["txtTemperatura"]}</td>
+                <td>${mensaje["txtHumedad"]}</td>
+                <td>${mensaje["dpFechaHora"]}</td>
+                </tr>`)
+            })
       </script>
     <title>App</title>
 </head>
