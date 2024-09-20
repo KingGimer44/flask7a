@@ -85,7 +85,7 @@ def evento():
 
     args = request.args
 
-    sql = "INSERT INTO sensor_log (Nombre_Apellido, Telefono, Fecha_Hora) VALUES (%s, %s, %s)"
+    sql = "INSERT INTO tst0_reservas (Nombre_Apellido, Telefono, Fecha_Hora) VALUES (%s, %s, %s)"
     val = (args["Nombre_Apellido"], args["Telefono"], datetime.datetime.now())
     cursor.execute(sql, val)
     
