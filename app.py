@@ -1,7 +1,9 @@
 from flask import Flask
+from markupsafe import escape
 
 from flask import render_template
 from flask import request
+
 import pusher
 
 import mysql.connector
@@ -30,8 +32,10 @@ def alumnos():
 @app.route("/alumnos/guardar", methods=["POST"])
 def alumnosGuardar():
     com.close()
+    
     matricula = request.form["txtMatriculaFA"];
     nombreapellido = request.form["txtNombreApellidoFA"];
+    
     return f"Matrícula: {matricula} Nombre y Apellido: {nombreapellido}"
 
 @app.route("/buscar")
