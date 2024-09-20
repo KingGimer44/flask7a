@@ -68,7 +68,7 @@ def buscar():
     if not con.is_connected():
         con.reconnect()
     cursor = con.cursor()
-    cursor.execute("SELECT * FROM tst0_reservas ORDER BY Id_Reserva DESC")
+    cursor.execute("SELECT * FROM tstO_reservas ORDER BY Id_Reserva DESC")
     registros = cursor.fetchall()
 
     con.close()
