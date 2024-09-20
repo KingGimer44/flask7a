@@ -17,39 +17,26 @@ con = mysql.connector.connect(
     password="dJ0CIAFF="
 )
 
-app = Flask(__name__)
-
 @app.route("/")
 def index():
     con.close()
-    
+  
     return render_template("app.html")
-    
+
 @app.route("/alumnos")
 def alumnos():
     con.close()
+  
     return render_template("alumnos.html")
 
 @app.route("/alumnos/guardar", methods=["POST"])
 def alumnosGuardar():
     con.close()
-    
-    nombreapellido = request.form["txtNombreApellidoFA"];
-    telefono = request.form["txtTelefonoFA"];
-    
-    return f"Nombre y Apellido: {Nombre_Apellido} Telefono: {Telefono} "
+  
+    matricula      = request.form["txtMatriculaFA"]
+    nombreapellido = request.form["txtNombreApellidoFA"]
 
-@app.route("/buscar")
-def buscar():
-    if not con.is_connected():
-        con.reconnect()
-    cursor = con.cursor()
-    cursor.execute("SELECT * FROM tst0_reservas ORDER BY Id_Reserva DESC")
-    registros = cursor.fetchall()
-
-    con.close()
-
-    return registros
+    return f"telefono: {telefono} Nombre y Apellido: {nombreapellido}"
 
 @app.route("/registrar", methods=["GET"])
 def registrar():
@@ -66,8 +53,8 @@ def registrar():
         con.reconnect()
     cursor = con.cursor()
     
-    sql = "INSERT INTO tst0_reservas (Id_Reserva, Nombre_Apellido, Telefono, Fecha_Hora) VALUES (%s, %s, %s, %s)"
-    val = (args["Nombre_Apellido"], args["Telefono"], datetime.datetime.now(pytz.timezone("America/Matamoros")))
+    sql = "INSERT INTO tst0_reservas (Nombre_Apellido, Telefono, Fecha_Hora) VALUES (%s, %s, %s)"
+    val = (args["nombreapellido"], args["temperatura"], datetime.datetime.now(pytz.timezone("America/Matamoros")))
     cursor.execute(sql, val)
 
     con.commit()
@@ -75,29 +62,15 @@ def registrar():
  
     pusher_client.trigger("registrosTiempoReal", "registroTiempoReal", args)
     return args
-    
-@app.route("/evento", methods=["GET"])
-def evento():
+
+@app.route("/buscar")
+def buscar():
     if not con.is_connected():
         con.reconnect()
-
     cursor = con.cursor()
+    cursor.execute("SELECT * FROM tst0_reservas ORDER BY Id_Reserva DESC")
+    registros = cursor.fetchall()
 
-    args = request.args
-
-    sql = "INSERT INTO tst0_reservas (Nombre_Apellido, Telefono, Fecha_Hora) VALUES (%s, %s, %s)"
-    val = (args["Nombre_Apellido"], args["Telefono"], datetime.datetime.now())
-    cursor.execute(sql, val)
-    
-    con.commit()
     con.close()
-    
-    pusher_client = pusher.Pusher(
-        app_id='1767967',
-        key='34091ea15b1a362fb38d',
-        secret='9a986831a832e499c9e4',
-        cluster='us2',
-        ssl=True
-    )
-    
-    pusher_client.trigger('conexion', 'evento', request.args)
+
+    return registros
