@@ -23,12 +23,12 @@
     <div class="container">
         <form method="post" id="frmAlumnos" class="formulario">
             <div class="mb-1">
-                <label id="lblMatriculaFA" for="txtMatriculaFA">Matrícula:</label>
-                <input type="number" name="txtMatriculaFA" id="txtMatriculaFA" class="form-control" required="true" minlength="8" maxlength="8" data-rule-digits="true">
+                <label id="lblMatriculaFA" for="txtNombreApellidoFA">Nombre y Apellido:</label>
+                <input type="text" name="txtNombreApellidoFA" id="txtNombreApellidoFA" class="form-control" required="true" minlength="8" maxlength="50">
             </div>
             <div class="mb-1">
-                <label id="lblNombreApellidoFA" for="txtNombreApellidoFA">Nombre y Apellido:</label>
-                <input type="text" name="txtNombreApellidoFA" id="txtNombreApellidoFA" class="form-control" required="true" minlength="10" maxlength="25">
+                <label id="lblNombreApellidoFA" for="txtTelefonoFA">Telefono:</label>
+                <input type="number" name="txtTelefonoFA" id="txtTelefonoFA" class="form-control" required="true" minlength="10" maxlength="10" data-rule-digits="true">
             </div>
             <div class="text-end">
                 <button id="btnGuardarFA" name="btnGuardarFA" class="btn btn-dark">Guardar</button>
@@ -40,8 +40,8 @@
         <table class="table table-sm">
             <thead>
                 <tr>
-                    <th>Matrícula</th>
                     <th>Nombre y Apellido</th>
+                    <th>Telefono</th>
                 </tr>
             </thead>
             <tbody id="tbodyAlumnos"></tbody>
@@ -54,16 +54,16 @@
         window.addEventListener("load", function (event) {
             $("#frmAlumnos").validate({
                 messages: {
-                    txtMatriculaFA: {
-                        required: "Ingresa la matrícula",
-                        minlength: "La matrícula es de 8 digitos",
-                        maxlength: "La matrícula es de 8 digitos",
-                        digits: "La matrícula es de solo números"
-                    },
                     txtNombreApellidoFA: {
                         required: "Ingresa tu nombre y apellido",
                         minlength: "Ingresa más o 10 caracteres",
-                        maxlength: "Ingresa menos o 25 caracteres"
+                        maxlength: "Ingresa menos o 50 caracteres"
+                    },
+                    txtTelefonoFA: {
+                        required: "Ingresa la matrícula",
+                        minlength: "El telefono es de 10 digitos",
+                        maxlength: "El telefono es de 10 digitos",
+                        digits: "El telefono es de solo números"
                     }
                 },
                 rules: {
