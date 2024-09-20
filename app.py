@@ -43,13 +43,38 @@ def alumnosGuardar():
 def buscar():
     if not con.is_connected():
         con.reconnect()
-
     cursor = con.cursor()
-    cursor.execute("SELECT * tst0_reservas")
-    
+    cursor.execute("SELECT * FROM tst0_reservas ORDER BY Id_Reserva DESC")
     registros = cursor.fetchall()
 
-    return registros;
+    con.close()
+
+    return registros
+
+@app.route("/registrar", methods=["GET"])
+def registrar():
+    args = request.args
+    pusher_client = pusher.Pusher(
+        app_id='1767967',
+        key='34091ea15b1a362fb38d',
+        secret='9a986831a832e499c9e4',
+        cluster='us2',
+        ssl=True
+    )
+
+    if not con.is_connected():
+        con.reconnect()
+    cursor = con.cursor()
+    
+    sql = "INSERT INTO tst0_reservas (Id_Reserva, Nombre_Apellido, Telefono, Fecha_Hora) VALUES (%s, %s, %s, %s)"
+    val = (args["Nombre_Apellido"], args["Telefono"], datetime.datetime.now(pytz.timezone("America/Matamoros")))
+    cursor.execute(sql, val)
+
+    con.commit()
+    con.close()
+ 
+    pusher_client.trigger("registrosTiempoReal", "registroTiempoReal", args)
+    return args
     
 @app.route("/evento", methods=["GET"])
 def evento():
