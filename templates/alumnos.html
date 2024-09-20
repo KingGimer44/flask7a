@@ -7,36 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-
-    <title>Alumnos</title>
+      <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+      <script>
+       
+    <title>Reservas</title>
 </head>
 <body>
-    <!-- Nombre de la etiqueta Ejemplo: INPUT -->
-    <!-- # para ID -->
-    <!-- . para CLASS -->
-
-    <!-- form index 0 -->
-    <!-- #frmAlumnos -->
-    <!-- .formulario index 0 -->
     <div class="container">
-        <form method="post" id="frmAlumnos" class="formulario">
-            <div class="mb-1">
-                <label id="lblMatriculaFA" for="txtNombreApellidoFA">Nombre y Apellido:</label>
-                <input type="text" name="txtNombreApellidoFA" id="txtNombreApellidoFA" class="form-control" required="true" minlength="8" maxlength="50">
-            </div>
-            <div class="mb-1">
-                <label id="lblNombreApellidoFA" for="txtTelefonoFA">Telefono:</label>
-                <input type="number" name="txtTelefonoFA" id="txtTelefonoFA" class="form-control" required="true" minlength="10" maxlength="10" data-rule-digits="true">
-            </div>
-            <div class="text-end">
-                <button id="btnGuardarFA" name="btnGuardarFA" class="btn btn-dark">Guardar</button>
-            </div>
-        </form>
-        <div id="divAlumnos"></div>
-    
-        <!-- table index 0 -->
         <table class="table table-sm">
             <thead>
                 <tr>
@@ -45,46 +22,53 @@
                     <th>Fecha y Hora</th>
                 </tr>
             </thead>
-            <tbody id="tbodyAlumnos"></tbody>
+            <tbody id="tbodyLog"></tbody>
         </table>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
-        window.addEventListener("load", function (event) {
-            $("#frmAlumnos").validate({
-                messages: {
-                    txtNombreApellidoFA: {
-                        required: "Ingresa tu nombre y apellido",
-                        minlength: "Ingresa más o 10 caracteres",
-                        maxlength: "Ingresa menos o 50 caracteres"
-                    },
-                    txtTelefonoFA: {
-                        required: "Ingresa la matrícula",
-                        minlength: "El telefono es de 10 digitos",
-                        maxlength: "El telefono es de 10 digitos",
-                        digits: "El telefono es de solo números"
-                    }
-                },
-                rules: {
-                    txtMatriculaFA: {
-                        // required: true,
-                        // minlength: 8,
-                        // maxlength: 8
-                        // digits: true
-                    }
+    function buscar() {
+            $.get("/buscar", function (respuesta) {
+                $("#tbodyLog").html("")
+
+                for (var x in respuesta) {
+                    var registro = respuesta[x]
+
+                    $("#tbodyLog").append(`<tr>
+                        <td>${registro[1]}</td>
+                        <td>${registro[2]}</td>
+                        <td>${registro[3]}</td>
+                    </tr>`)
                 }
             })
+        }
 
-            $("#frmAlumnos").submit(function (event) {
-                event.preventDefault()
+        buscar()
 
-                $.post("/alumnos/guardar", $(this).serialize(), function (respuesta) {
-                    console.log(respuesta)
-                })
-            })
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+    
+        var pusher = new Pusher('34091ea15b1a362fb38d', {
+            cluster: 'us2'
+        });
+        //canal > conexion
+        // var channel = pusher.subscribe('conexion');
+        //   //Evento, accion
+        // channel.bind('evento', function(mensaje) {
+        //   //alert("Ya ocurrio el evento en la pagina")
+        //     // $("#tbodyLog").append(`<tr>
+        //     //     <td>${mensaje["txtTemperatura"]}</td>
+        //     //     <td>${mensaje["txtHumedad"]}</td>
+        //     //     <td>${mensaje["dpFechaHora"]}</td>
+        //     //     </tr>`)
+        //     buscar()
+        // })
+        var channel = pusher.subscribe("registrosTiempoReal")
+        channel.bind("registroTiempoReal", function (mensaje) {
+            buscar()
         })
-    </script>    
+    </script>
 </body>
 </html>
