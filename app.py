@@ -24,12 +24,6 @@ def index():
     con.close()
     
     return render_template("app.html")
-
-@app.route("/app")
-def app():
-    con.close()
-    
-    return render_template("app.html")
     
 @app.route("/alumnos")
 def alumnos():
@@ -71,7 +65,7 @@ def evento():
     cursor.execute(sql, val)
     
     con.commit()
-    com.close()
+    con.close()
     
     pusher_client = pusher.Pusher(
         app_id='1767967',
