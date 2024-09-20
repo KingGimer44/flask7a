@@ -37,7 +37,7 @@ def alumnosGuardar():
     nombreapellido = request.form["txtNombreApellidoFA"];
     telefono = request.form["txtTelefonoFA"];
     
-    return f"Matrícula: {matricula} Nombre y Apellido: {nombreapellido}"
+    return f"Nombre y Apellido: {Nombre_Apellido} Telefono: {Telefono} "
 
 @app.route("/buscar")
 def buscar():
