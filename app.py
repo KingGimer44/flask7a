@@ -34,8 +34,8 @@ def alumnos():
 def alumnosGuardar():
     con.close()
     
-    matricula = request.form["txtMatriculaFA"];
     nombreapellido = request.form["txtNombreApellidoFA"];
+    telefono = request.form["txtTelefonoFA"];
     
     return f"Matrícula: {matricula} Nombre y Apellido: {nombreapellido}"
 
