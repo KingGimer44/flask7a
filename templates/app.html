@@ -30,22 +30,22 @@
 
     <script>
     function buscar() {
-            $.get("/buscar", function (respuesta) {
-                $("#tbodyLog").html("")
+        //     $.get("/buscar", function (respuesta) {
+        //         $("#tbodyLog").html("")
 
-                for (var x in respuesta) {
-                    var registro = respuesta[x]
+        //         for (var x in respuesta) {
+        //             var registro = respuesta[x]
 
-                    $("#tbodyLog").append(`<tr>
-                        <td>${registro[1]}</td>
-                        <td>${registro[2]}</td>
-                        <td>${registro[3]}</td>
-                    </tr>`)
-                }
-            })
-        }
+        //             $("#tbodyLog").append(`<tr>
+        //                 <td>${registro[1]}</td>
+        //                 <td>${registro[2]}</td>
+        //                 <td>${registro[3]}</td>
+        //             </tr>`)
+        //         }
+        //     })
+        // }
 
-        buscar()
+        // buscar()
 
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
@@ -53,22 +53,21 @@
         var pusher = new Pusher('34091ea15b1a362fb38d', {
             cluster: 'us2'
         });
-        //canal > conexion
-        // var channel = pusher.subscribe('conexion');
-        //   //Evento, accion
-        // channel.bind('evento', function(mensaje) {
-        //   //alert("Ya ocurrio el evento en la pagina")
-        //     // $("#tbodyLog").append(`<tr>
-        //     //     <td>${mensaje["txtTemperatura"]}</td>
-        //     //     <td>${mensaje["txtHumedad"]}</td>
-        //     //     <td>${mensaje["dpFechaHora"]}</td>
-        //     //     </tr>`)
-        //     buscar()
-        // })
-        var channel = pusher.subscribe("registrosTiempoReal")
-        channel.bind("registroTiempoReal", function (mensaje) {
+        canal > conexion
+        var channel = pusher.subscribe('conexion');
+          //Evento, accion
+        channel.bind('evento', function(mensaje) {
+            $("#tbodyLog").append(`<tr>
+                <td>${mensaje["txtTemperatura"]}</td>
+                <td>${mensaje["txtHumedad"]}</td>
+                <td>${mensaje["dpFechaHora"]}</td>
+                </tr>`)
             buscar()
         })
+        // var channel = pusher.subscribe("registrosTiempoReal")
+        // channel.bind("registroTiempoReal", function (mensaje) {
+        //     buscar()
+        // })
     </script>
 </body>
 </html>
