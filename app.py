@@ -21,17 +21,18 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    com.close()
+    con.close()
+    
     return render_template("app.html")
 
 @app.route("/alumnos")
 def alumnos():
-    com.close()
+    con.close()
     return render_template("alumnos.html")
 
 @app.route("/alumnos/guardar", methods=["POST"])
 def alumnosGuardar():
-    com.close()
+    con.close()
     
     matricula = request.form["txtMatriculaFA"];
     nombreapellido = request.form["txtNombreApellidoFA"];
