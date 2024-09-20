@@ -25,6 +25,12 @@ def index():
     
     return render_template("app.html")
 
+@app.route("/app")
+def app():
+    con.close()
+    
+    return render_template("app.html")
+    
 @app.route("/alumnos")
 def alumnos():
     con.close()
