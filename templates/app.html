@@ -51,18 +51,22 @@
         Pusher.logToConsole = true;
     
         var pusher = new Pusher('34091ea15b1a362fb38d', {
-          cluster: 'us2'
+            cluster: 'us2'
         });
         //canal > conexion
-        var channel = pusher.subscribe('conexion');
-          //Evento, accion
-        channel.bind('evento', function(mensaje) {
-          //alert("Ya ocurrio el evento en la pagina")
-            // $("#tbodyLog").append(`<tr>
-            //     <td>${mensaje["txtTemperatura"]}</td>
-            //     <td>${mensaje["txtHumedad"]}</td>
-            //     <td>${mensaje["dpFechaHora"]}</td>
-            //     </tr>`)
+        // var channel = pusher.subscribe('conexion');
+        //   //Evento, accion
+        // channel.bind('evento', function(mensaje) {
+        //   //alert("Ya ocurrio el evento en la pagina")
+        //     // $("#tbodyLog").append(`<tr>
+        //     //     <td>${mensaje["txtTemperatura"]}</td>
+        //     //     <td>${mensaje["txtHumedad"]}</td>
+        //     //     <td>${mensaje["dpFechaHora"]}</td>
+        //     //     </tr>`)
+        //     buscar()
+        // })
+        var channel = pusher.subscribe("registrosTiempoReal")
+        channel.bind("registroTiempoReal", function (mensaje) {
             buscar()
         })
     </script>
