@@ -17,16 +17,16 @@ con = mysql.connector.connect(
     password="dJ0CIAFF="
 )
 
+app = Flask(__name__)
+
 @app.route("/")
 def index():
     con.close()
-  
     return render_template("app.html")
 
 @app.route("/alumnos")
 def alumnos():
     con.close()
-  
     return render_template("alumnos.html")
 
 @app.route("/alumnos/guardar", methods=["POST"])
